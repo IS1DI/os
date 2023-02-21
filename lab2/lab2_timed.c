@@ -1,8 +1,9 @@
 #include "stdio.h"
 #include "stdlib.h"
 #include "stdbool.h"
-#include "pthread.h"
+#include <pthread.h>
 #include <unistd.h>
+#include <time.h>
 
 
 pthread_mutex_t mutex;
@@ -17,9 +18,14 @@ void* proc(void* args){
     printf("Поток %d стартовал\n", arg->id);
     int* ret = (int*)malloc(sizeof(int)); 
     *ret = rand();
+    struct timespec tme;
     while (arg->is_working)
     {
-        pthread_mutex_lock(&mutex);
+        
+        do{
+            clock_gettime(CLOCK_REALTIME, &tme);
+            tme.tv_sec += 1;
+        }while(pthread_mutex_timedlock(&mutex,&tme)!=0);
         for (int i = 0; i < 10; i++)
         {
             
