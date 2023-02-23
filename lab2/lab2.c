@@ -35,8 +35,8 @@ void* proc(void* args){
     pthread_exit(ret);
     free(ret);
 
+    //haha
 
-    
 };  
 
 
