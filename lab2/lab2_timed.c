@@ -27,8 +27,9 @@ void* proc(void* args){
             tme.tv_sec += 1;
             code = pthread_mutex_timedlock(&mutex,&tme);
             if(code!=0){
-                printf("\nerror - %d\n",sterror(code));
+                printf("\nerror - %s\n",sterror(code));
             }
+            printf(code);
         }while(code!=0);
 
         for (int i = 0; i < 10; i++)
@@ -44,6 +45,7 @@ void* proc(void* args){
     }
     printf("Число rand = %d в %d потоке \nПоток %d завершил работу\n",*ret,arg->id, arg->id);
     pthread_exit(ret);
+    free(ret);
 };  
 
 

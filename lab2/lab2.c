@@ -33,7 +33,6 @@ void* proc(void* args){
     }
     printf("Число rand = %d в %d потоке \nПоток %d завершил работу\n",*ret,arg->id, arg->id);
     pthread_exit(ret);
-
 };  
 
 
