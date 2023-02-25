@@ -33,9 +33,6 @@ void* proc(void* args){
     }
     printf("Число rand = %d в %d потоке \nПоток %d завершил работу\n",*ret,arg->id, arg->id);
     pthread_exit(ret);
-    free(ret);
-
-    //haha
 
 };  
 
@@ -61,8 +58,10 @@ int main()
     args2.is_working = false;
     pthread_join(thread1,(void**)&status1);
     printf("Число rand = %d в main потоке, полученное из %d потока\n",*status1,args1.id);
+    free(status1);
     pthread_join(thread2,(void**)&status2);
     printf("Число rand = %d в main потоке, полученное из %d потока\n",*status2,args2.id);
+    free(status2);
     pthread_mutex_destroy(&mutex);
     printf("mutex удалён\n");
     printf("Основной поток завершил работу\n");
