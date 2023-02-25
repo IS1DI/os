@@ -26,6 +26,9 @@ void* proc(void* args){
             clock_gettime(CLOCK_REALTIME, &tme);
             tme.tv_sec += 1;
             code = pthread_mutex_timedlock(&mutex,&tme);
+            if(code!=0){
+                printf("\nerror - %s\n",sterror(code));
+            }
             printf(code);
         }while(code!=0);
 
@@ -67,8 +70,10 @@ int main()
     args2.is_working = false;
     pthread_join(thread1,(void**)&status1);
     printf("Число rand = %d в main потоке, полученное из %d потока\n",*status1,args1.id);
+    free(status1);
     pthread_join(thread2,(void**)&status2);
     printf("Число rand = %d в main потоке, полученное из %d потока\n",*status2,args2.id);
+    free(status2);
     pthread_mutex_destroy(&mutex);
     printf("mutex удалён\n");
     printf("Основной поток завершил работу\n");
