@@ -4,8 +4,7 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <time.h>
-
-
+#include <string.h>
 pthread_mutex_t mutex;
 typedef struct attrs{
     int id;
@@ -27,7 +26,7 @@ void* proc(void* args){
             tme.tv_sec += 1;
             code = pthread_mutex_timedlock(&mutex,&tme);
             if(code!=0){
-                printf("\nerror - %s\n",sterror(code));
+                printf("\nerror of %d thread - %s\n",arg->id,strerror(code));
             }
             printf(code);
         }while(code!=0);
